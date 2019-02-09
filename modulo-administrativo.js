@@ -11,13 +11,30 @@ var By = webdriver.By;
 module.exports = {
     login: function (driver, login, password) {
     
-        driver.get('http://www.mapfreconnect.com.br/ModuloAdministrativo/acesso.aspx');
+        driver.get('http://www.mapfreconnect.com.br/ModuloAdministrativo/index.aspx?Pagina=Menu_Iniciar');
+        driver.switchTo().frame(2);
+
+        size = driver.findElements(By.tagName("frame")).size();
+        // prints the total number of frames inside outer frame           
+        console.log("Total Frames --" + size)
+
         driver.findElement(By.id(ID_LOGIN)).sendKeys(login);
         driver.findElement(By.id(ID_SENHA)).sendKeys(password);
         driver.findElement(By.id(ID_BOTAO_OK)).click();
     },
-    bar: function () {
-      // whatever
+    tabela: function (driver, retorno) {
+
+      driver.executeScript(function() {
+        return Array.prototype.map.call(document.querySelectorAll('#customers tr'), function(tr){
+          return Array.prototype.map.call(tr.querySelectorAll('td'), function(td){
+            return td.innerHTML;
+            });
+          });
+        }).then(function(innerHTML) {
+          //console.log(innerHTML);
+          return retorno(innerHTML);
+      });
+     
     }
-  };
-  
+  };  
+
