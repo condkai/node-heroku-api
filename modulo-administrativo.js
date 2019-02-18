@@ -25,6 +25,7 @@ module.exports = {
     tabela: function (driver, retorno) {
 
       driver.executeScript(function() {
+        
         return Array.prototype.map.call(document.querySelectorAll('#customers tr'), function(tr){
           return Array.prototype.map.call(tr.querySelectorAll('td'), function(td){
             return td.innerHTML;
@@ -36,5 +37,7 @@ module.exports = {
       });
      
     }
+
+
   };  
 
